@@ -46,16 +46,25 @@ namespace Web.Services.FileService
 
         public string UploadFile(IFormFile file, string path)
         {
-            string uniqueFilename = GenerateUniqueFileName(file.FileName);
-            string uploadPath = GetOrCreateUploadDirectory(path);
-            var filePath = GenerateFilePath(uploadPath, uniqueFilename);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            try
             {
-                file.CopyTo(stream);
-            }
+                string uniqueFilename = GenerateUniqueFileName(file.FileName);
+                string uploadPath = GetOrCreateUploadDirectory(path);
+                var filePath = GenerateFilePath(uploadPath, uniqueFilename);
 
-            return uniqueFilename;
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                return uniqueFilename;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+
+                return string.Empty;
+            }
         }
 
         public string GenerateUniqueFileName(string fileName)
