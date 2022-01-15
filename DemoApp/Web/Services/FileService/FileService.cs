@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,21 +12,36 @@ namespace Web.Services.FileService
 {
     public class FileService : IFileService
     {
+        private readonly ILogger<FileService> _logger;
         public static string UploadDirectory { get; set; } = "uploads";
         public static string StaticFilesDirectory { get; set; } = "wwwroot";
 
+        public FileService(ILogger<FileService> logger)
+        {
+            _logger = logger;
+        }
+
         public async Task<string> UploadFileAsync(IFormFile file, string path)
         {
-            string uniqueFilename = GenerateUniqueFileName(file.FileName);
-            string uploadPath = GetOrCreateUploadDirectory(path);
-            var filePath = GenerateFilePath(uploadPath, uniqueFilename);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            try
             {
-                await file.CopyToAsync(stream);
-            }
+                string uniqueFilename = GenerateUniqueFileName(file.FileName);
+                string uploadPath = GetOrCreateUploadDirectory(path);
+                var filePath = GenerateFilePath(uploadPath, uniqueFilename);
 
-            return uniqueFilename;
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return uniqueFilename;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+
+                return string.Empty;
+            }
         }
 
         public string UploadFile(IFormFile file, string path)
