@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Web.Constants.File;
 using Web.Models;
@@ -54,6 +55,16 @@ namespace Web.Controllers
             var friendlyFileName = _fileService.GetFriendlyFileName(fileName, false);
 
             return friendlyFileName;
+        }
+
+        public IActionResult GetFile(IFormFile file)
+        {
+            var fileStream = file.OpenReadStream();
+           
+            return new FileStreamResult(fileStream, "text/plain")
+            {
+                FileDownloadName = "test.txt"
+            };
         }
     }
 }

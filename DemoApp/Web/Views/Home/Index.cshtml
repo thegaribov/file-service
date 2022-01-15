@@ -60,5 +60,21 @@
     </form>
 </div>
 
+<hr />
+
+<div>
+    <h1 class="display-4">Get file</h1>
+    <form asp-controller="home" asp-action="getfile" form="deleteForm" enctype="multipart/form-data" >
+        <div class="form-group">
+            <label for="file">Example file input</label>
+            <input name="file" type="file" class="form-control-file" id="file">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<hr />
+
 
 
