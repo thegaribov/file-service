@@ -32,7 +32,7 @@ namespace Web.Controllers
         {
             string uniquefileName = await _fileService.UploadFileAsync(imageFile, FilePath.Announcement);
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

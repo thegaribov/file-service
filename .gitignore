@@ -350,6 +350,6 @@ MigrationBackup/
 .ionide/
 
 #Ignore files
-Web/wwwroot/uploads
+DemoApp/Web/wwwroot/uploads
 
 
