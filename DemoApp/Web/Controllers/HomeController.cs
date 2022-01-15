@@ -35,9 +35,11 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Privacy()
+        public IActionResult DeleteFile(string fileName, string path)
         {
-            return View();
+            _fileService.DeleteFile(fileName, path);
+
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

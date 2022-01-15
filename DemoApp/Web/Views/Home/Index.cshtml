@@ -3,11 +3,29 @@
 }
 
 <div>
-    <h1 class="display-4">Upload demo</h1>
+    <h1 class="display-4">Upload file</h1>
     <form asp-controller="home" asp-action="uploadfile" enctype="multipart/form-data">
         <div class="form-group">
             <label for="exampleFormControlFile1">Example file input</label>
             <input name="imageFile" type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<hr />
+
+<div>
+    <h1 class="display-4">Delete file</h1>
+    <form asp-controller="home" asp-action="deletefile" form="deleteForm">
+        <div class="form-group">
+            <label for="fileName">File name:</label>
+            <input name="filename" type="text" class="form-control" id="fileName">
+        </div>
+        <div class="form-group">
+            <label for="filePath">Path:</label>
+            <input name="path" type="text" class="form-control" id="filePath">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
