@@ -42,6 +42,18 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+        public string FriendlyFileNameWithExtension(string fileName)
+        {
+            var friendlyFileName = _fileService.GetFriendlyFileName(fileName, true);
+
+            return friendlyFileName;
+        }
+
+        public string FriendlyFileNameWithoutExtension(string fileName)
+        {
+            var friendlyFileName = _fileService.GetFriendlyFileName(fileName, false);
+
+            return friendlyFileName;
+        }
     }
 }

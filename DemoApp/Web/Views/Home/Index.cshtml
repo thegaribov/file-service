@@ -32,5 +32,33 @@
     </form>
 </div>
 
+<hr />
+
+<div>
+    <h1 class="display-4">Friendly file name (with extension)</h1>
+    <form asp-controller="home" asp-action="FriendlyFileNameWithExtension">
+        <div class="form-group">
+            <label for="fileName">File name:</label>
+            <input name="filename" type="text" class="form-control" id="fileName">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<hr />
+
+<div>
+    <h1 class="display-4">Friendly file name (without extension)</h1>
+    <form asp-controller="home" asp-action="FriendlyFileNameWithoutExtension">
+        <div class="form-group">
+            <label for="fileName">File name:</label>
+            <input name="filename" type="text" class="form-control" id="fileName">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
 
 

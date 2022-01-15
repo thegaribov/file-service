@@ -84,6 +84,30 @@ namespace Web.Services.FileService
             }
         }
 
+        public string GetFriendlyFileName(string fileName, bool withExtension = true)
+        {
+            try
+            {
+                string friendlyFileName = fileName.Split("_", 2)[1];
+
+                if (withExtension)
+                {
+                    return friendlyFileName;
+                }
+                else
+                {
+                    return TruncateFileNameExtension(friendlyFileName);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+
+                return string.Empty;
+            }
+
+        }
+
 
 
         public string GenerateUniqueFileName(string fileName)
@@ -116,6 +140,11 @@ namespace Web.Services.FileService
         public string GetFileUrl(string fileName, string path)
         {
             return $"/{UploadDirectory}/{path}/{fileName}";
+        }
+
+        public string TruncateFileNameExtension(string fileName)
+        {
+            return Path.GetFileNameWithoutExtension(fileName);
         }
     }
 }
