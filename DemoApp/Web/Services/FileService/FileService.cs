@@ -108,6 +108,43 @@ namespace Web.Services.FileService
 
         }
 
+        public double GetFileSize(string fileName, string path, double storageUnit)
+        {
+            try
+            {
+                var filePath = GetFilePath(fileName, path);
+
+                using (var fileStream = File.OpenRead(filePath))
+                {
+                    return fileStream.Length / storageUnit;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+
+                return 0;
+            }
+        }
+
+        public double GetFileSize(string fileName, string path, double storageUnit, byte digits)
+        {
+            try
+            {
+                var filePath = GetFilePath(fileName, path);
+
+                using (var fileStream = File.OpenRead(filePath))
+                {
+                    return Math.Round(fileStream.Length / storageUnit, digits);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+
+                return 0;
+            }
+        }
 
 
         public string GenerateUniqueFileName(string fileName)

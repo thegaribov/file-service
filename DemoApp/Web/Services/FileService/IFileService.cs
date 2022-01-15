@@ -13,6 +13,8 @@ namespace Web.Services.FileService
         string UploadFile(IFormFile file, string path);
         void DeleteFile(string filename, string path);
         string GetFriendlyFileName(string fileName, bool withExtension = true);
+        double GetFileSize(string fileName, string path, double storageUnit);
+        double GetFileSize(string fileName, string path, double storageUnit, byte digits);
 
         string GenerateUniqueFileName(string fileName);
         string GetOrCreateUploadDirectory(string path);
