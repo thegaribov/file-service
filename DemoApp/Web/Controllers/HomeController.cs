@@ -66,5 +66,12 @@ namespace Web.Controllers
                 FileDownloadName = "test.txt"
             };
         }
+
+        public double GetFileSize(string fileName, string path)
+        {
+            var fileSize = _fileService.GetFileSize(fileName, path, StorageUnits.Megabyte, 5);
+
+            return fileSize;
+        }
     }
 }

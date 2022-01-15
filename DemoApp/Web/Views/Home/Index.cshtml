@@ -76,5 +76,21 @@
 
 <hr />
 
+<div>
+    <h1 class="display-4">Get file size</h1>
+    <form asp-controller="home" asp-action="GetFileSize" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="fileName">File name:</label>
+            <input name="filename" type="text" class="form-control" id="fileName">
+        </div>
+        <div class="form-group">
+            <label for="filePath">Path:</label>
+            <input name="path" type="text" class="form-control" id="filePath">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
 
 
