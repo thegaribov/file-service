@@ -112,5 +112,10 @@ namespace Web.Services.FileService
         {
             return Path.Combine(Directory.GetCurrentDirectory(), StaticFilesDirectory, UploadDirectory, path, fileName);
         }
+
+        public string GetFileUrl(string fileName, string path)
+        {
+            return $"/{UploadDirectory}/{path}/{fileName}";
+        }
     }
 }

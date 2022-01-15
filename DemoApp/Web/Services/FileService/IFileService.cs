@@ -17,5 +17,6 @@ namespace Web.Services.FileService
         string GetOrCreateUploadDirectory(string path);
         string GenerateFilePath(string uploadPath, string filename);
         string GetFilePath(string fileName, string path);
+        string GetFileUrl(string fileName, string path);
     }
 }
