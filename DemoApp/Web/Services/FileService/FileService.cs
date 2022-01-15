@@ -67,6 +67,25 @@ namespace Web.Services.FileService
             }
         }
 
+        public void DeleteFile(string filename, string path)
+        {
+            try
+            {
+                string filePath = GetFilePath(filename, path);
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+            }
+        }
+
+
+
         public string GenerateUniqueFileName(string fileName)
         {
             return Guid.NewGuid() + "_" + fileName;
@@ -87,6 +106,11 @@ namespace Web.Services.FileService
         public string GenerateFilePath(string uploadPath, string filename)
         {
             return Path.Combine(uploadPath, filename); ;
+        }
+
+        public string GetFilePath(string fileName, string path)
+        {
+            return Path.Combine(Directory.GetCurrentDirectory(), StaticFilesDirectory, UploadDirectory, path, fileName);
         }
     }
 }
