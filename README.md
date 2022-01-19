@@ -6,3 +6,4 @@ File service file are located in `Demo -> Web -> Services -> FileServices`
 
 # Technical Stack
 - ASP.NET Core 5.0 (with .NET Core 5.0)
+- FluentValidation.AspNetCore 10.3.6
