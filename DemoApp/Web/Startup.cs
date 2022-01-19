@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Services.FileService;
+using Web.ViewModels;
 
 namespace Web
 {
@@ -26,8 +29,14 @@ namespace Web
         {
             services.AddControllersWithViews();
 
-
             services.AddTransient<IFileService, FileService>();
+
+            #region Fluent Validations
+
+            services.AddFluentValidation();
+            services.AddTransient<IValidator<UploadFileViewModel>, UploadFileViewModelValidator>();
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
