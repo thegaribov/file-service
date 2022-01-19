@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Web.Constants.File;
 using Web.Models;
 using Web.Services.FileService;
-using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -30,13 +29,9 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> UploadFile(UploadFileViewModel model)
+        public async Task<IActionResult> UploadFile(IFormFile imageFile)
         {
-            if (ModelState.IsValid)
-            {
-                Console.WriteLine("sasd");
-
-            }
+            string uniquefileName = await _fileService.UploadFileAsync(imageFile, FilePath.Announcement);
 
             return RedirectToAction(nameof(Index));
         }
