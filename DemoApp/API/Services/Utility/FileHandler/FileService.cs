@@ -43,12 +43,56 @@ namespace API.Services.Utility.FileHandler
                 return string.Empty;
             }
         }
+        public async Task<string> UploadFileAsync(IFormFile file, string fileName, string path)
+        {
+            try
+            {
+                string uniqueFilename = GenerateUniqueFileName(fileName);
+                string uploadPath = GetOrCreateUploadDirectory(path);
+                var filePath = GenerateFilePath(uploadPath, uniqueFilename);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return uniqueFilename;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+
+                return string.Empty;
+            }
+        }
 
         public string UploadFile(IFormFile file, string path)
         {
             try
             {
                 string uniqueFilename = GenerateUniqueFileName(file.FileName);
+                string uploadPath = GetOrCreateUploadDirectory(path);
+                var filePath = GenerateFilePath(uploadPath, uniqueFilename);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+                return uniqueFilename;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred");
+
+                return string.Empty;
+            }
+        }
+        public string UploadFile(IFormFile file, string fileName, string path)
+        {
+            try
+            {
+                string uniqueFilename = GenerateUniqueFileName(fileName);
                 string uploadPath = GetOrCreateUploadDirectory(path);
                 var filePath = GenerateFilePath(uploadPath, uniqueFilename);
 

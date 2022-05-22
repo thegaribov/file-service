@@ -10,7 +10,11 @@ namespace API.Services.Utility.FileHandler
     public interface IFileService
     {
         Task<string> UploadFileAsync(IFormFile file, string path);
+        Task<string> UploadFileAsync(IFormFile file, string fileName, string path);
+
         string UploadFile(IFormFile file, string path);
+        string UploadFile(IFormFile file, string fileName, string path);
+
         void DeleteFile(string filename, string path);
         string GetFriendlyFileName(string fileName, bool withExtension = true);
         double GetFileSize(string fileName, string path, double storageUnit);
