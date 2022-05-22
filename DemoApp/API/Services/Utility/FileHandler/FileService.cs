@@ -117,11 +117,7 @@ namespace API.Services.Utility.FileHandler
             {
                 string filePath = GetFilePath(filename, path);
 
-
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                }
+                if (File.Exists(filePath)) File.Delete(filePath);                
             }
             catch (Exception e)
             {
@@ -135,14 +131,7 @@ namespace API.Services.Utility.FileHandler
             {
                 string friendlyFileName = fileName.Split("_", 2)[1];
 
-                if (withExtension)
-                {
-                    return friendlyFileName;
-                }
-                else
-                {
-                    return Path.GetFileNameWithoutExtension(friendlyFileName);
-                }
+                return withExtension ? friendlyFileName : Path.GetFileNameWithoutExtension(friendlyFileName);
             }
             catch (Exception e)
             {
@@ -158,11 +147,9 @@ namespace API.Services.Utility.FileHandler
             try
             {
                 var filePath = GetFilePath(fileName, path);
+                using var fileStream = File.OpenRead(filePath);
 
-                using (var fileStream = File.OpenRead(filePath))
-                {
-                    return fileStream.Length / storageUnit;
-                }
+                return fileStream.Length / storageUnit;
             }
             catch (Exception e)
             {
@@ -177,11 +164,9 @@ namespace API.Services.Utility.FileHandler
             try
             {
                 var filePath = GetFilePath(fileName, path);
-
-                using (var fileStream = File.OpenRead(filePath))
-                {
-                    return Math.Round(fileStream.Length / storageUnit, digits);
-                }
+                using var fileStream = File.OpenRead(filePath);
+                
+                return Math.Round(fileStream.Length / storageUnit, digits);
             }
             catch (Exception e)
             {
