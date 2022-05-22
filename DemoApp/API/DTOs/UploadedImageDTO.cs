@@ -8,17 +8,17 @@ using System.Linq;
 
 namespace API.DTOs
 {
-    public class UploadedFileDTO
+    public class UploadedImageDTO
     {
         public IFormFile File { get; set; }
     }
 
-    public class UploadedFileDTOValidator : AbstractValidator<UploadedFileDTO>
+    public class UploadedImageDTOValidator : AbstractValidator<UploadedImageDTO>
     {
         private readonly double _allowedMaxUploadSize = 2 * StorageUnits.Megabyte;
         private readonly string[] _allowedContentTypes = { MimeType.Image.Jpeg, MimeType.Image.Jpg, MimeType.Image.Png};
 
-        public UploadedFileDTOValidator()
+        public UploadedImageDTOValidator()
         {
             IntegrateRules();
         }

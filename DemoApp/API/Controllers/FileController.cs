@@ -25,7 +25,7 @@ namespace API.Controllers
         }
 
         [HttpPost("~/upload-file")]
-        public async Task<IActionResult> UploadFile([FromForm] UploadedFileDTO uploadedFileDTO)
+        public async Task<IActionResult> UploadFile([FromForm] UploadedImageDTO uploadedFileDTO)
         {
             string uniquefileName = await _fileService.UploadFileAsync(uploadedFileDTO.File, FilePath.Announcement);
 

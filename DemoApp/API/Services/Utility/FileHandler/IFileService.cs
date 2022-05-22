@@ -21,6 +21,5 @@ namespace API.Services.Utility.FileHandler
         string GenerateFilePath(string uploadPath, string filename);
         string GetFilePath(string fileName, string path);
         string GetFileUrl(string fileName, string path);
-        string TruncateFileNameExtension(string fileName);
     }
 }

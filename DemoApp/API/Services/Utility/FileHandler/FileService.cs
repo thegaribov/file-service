@@ -97,7 +97,7 @@ namespace API.Services.Utility.FileHandler
                 }
                 else
                 {
-                    return TruncateFileNameExtension(friendlyFileName);
+                    return Path.GetFileNameWithoutExtension(friendlyFileName);
                 }
             }
             catch (Exception e)
@@ -178,11 +178,6 @@ namespace API.Services.Utility.FileHandler
         public string GetFileUrl(string fileName, string path)
         {
             return $"/{UploadDirectory}/{path}/{fileName}";
-        }
-
-        public string TruncateFileNameExtension(string fileName)
-        {
-            return Path.GetFileNameWithoutExtension(fileName);
         }
     }
 }
