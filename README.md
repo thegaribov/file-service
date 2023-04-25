@@ -8,3 +8,4 @@ File service file are located in `Demo -> API -> Services -> Utility -> FileHand
 - ASP.NET Core 5.0 (with .NET Core 5.0)
 - FluentValidation.AspNetCore (11.0.1)
 - Swashbuckle.AspNetCore (5.6.3)
+- System.IO.Abstractions (19.2.18)
