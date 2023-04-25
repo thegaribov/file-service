@@ -192,9 +192,9 @@ namespace API.Services.Utility.FileHandler
             var uploadPath = _fileSystem.Path.Combine(
                             _fileSystem.Directory.GetCurrentDirectory(), StaticFilesDirectory, UploadDirectory, path);
 
-            if (!Directory.Exists(uploadPath))
+            if (!_fileSystem.Directory.Exists(uploadPath))
             {
-                Directory.CreateDirectory(uploadPath);
+                _fileSystem.Directory.CreateDirectory(uploadPath);
             }
 
             return uploadPath;
