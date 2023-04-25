@@ -7,18 +7,22 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.Abstractions;
+
 
 namespace API.Services.Utility.FileHandler
 {
     public class FileService : IFileService
     {
         private readonly ILogger<FileService> _logger;
-        public static string UploadDirectory { get; set; } = "uploads";
-        public static string StaticFilesDirectory { get; set; } = "wwwroot";
+        public const string UploadDirectory = "uploads";
+        public const string StaticFilesDirectory = "wwwroot";
+        private readonly IFileSystem _fileSystem;
 
-        public FileService(ILogger<FileService> logger)
+        public FileService(ILogger<FileService> logger, IFileSystem fileSystem)
         {
             _logger = logger;
+            _fileSystem = fileSystem;
         }
 
         public async Task<string> UploadFileAsync(IFormFile file, string path)
@@ -29,7 +33,7 @@ namespace API.Services.Utility.FileHandler
                 string uploadPath = GetOrCreateUploadDirectory(path);
                 var filePath = GenerateFilePath(uploadPath, uniqueFilename);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = _fileSystem.FileStream.New(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
@@ -74,7 +78,7 @@ namespace API.Services.Utility.FileHandler
                 string uploadPath = GetOrCreateUploadDirectory(path);
                 var filePath = GenerateFilePath(uploadPath, uniqueFilename);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = _fileSystem.FileStream.New(filePath, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
@@ -117,7 +121,8 @@ namespace API.Services.Utility.FileHandler
             {
                 string filePath = GetFilePath(filename, path);
 
-                if (File.Exists(filePath)) File.Delete(filePath);                
+                if (_fileSystem.File.Exists(filePath))
+                    _fileSystem.File.Delete(filePath);
             }
             catch (Exception e)
             {
@@ -131,7 +136,7 @@ namespace API.Services.Utility.FileHandler
             {
                 string friendlyFileName = fileName.Split("_", 2)[1];
 
-                return withExtension ? friendlyFileName : Path.GetFileNameWithoutExtension(friendlyFileName);
+                return withExtension ? friendlyFileName : _fileSystem.Path.GetFileNameWithoutExtension(friendlyFileName);
             }
             catch (Exception e)
             {
@@ -147,7 +152,7 @@ namespace API.Services.Utility.FileHandler
             try
             {
                 var filePath = GetFilePath(fileName, path);
-                using var fileStream = File.OpenRead(filePath);
+                using var fileStream = _fileSystem.File.OpenRead(filePath);
 
                 return fileStream.Length / storageUnit;
             }
@@ -164,8 +169,8 @@ namespace API.Services.Utility.FileHandler
             try
             {
                 var filePath = GetFilePath(fileName, path);
-                using var fileStream = File.OpenRead(filePath);
-                
+                using var fileStream = _fileSystem.File.OpenRead(filePath);
+
                 return Math.Round(fileStream.Length / storageUnit, digits);
             }
             catch (Exception e)
@@ -184,7 +189,8 @@ namespace API.Services.Utility.FileHandler
 
         public string GetOrCreateUploadDirectory(string path)
         {
-            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), StaticFilesDirectory, UploadDirectory, path);
+            var uploadPath = _fileSystem.Path.Combine(
+                            _fileSystem.Directory.GetCurrentDirectory(), StaticFilesDirectory, UploadDirectory, path);
 
             if (!Directory.Exists(uploadPath))
             {
@@ -196,12 +202,17 @@ namespace API.Services.Utility.FileHandler
 
         public string GenerateFilePath(string uploadPath, string filename)
         {
-            return Path.Combine(uploadPath, filename); ;
+            return _fileSystem.Path.Combine(uploadPath, filename); ;
         }
 
         public string GetFilePath(string fileName, string path)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), StaticFilesDirectory, UploadDirectory, path, fileName);
+            return _fileSystem.Path.Combine(
+                        _fileSystem.Directory.GetCurrentDirectory(), 
+                        StaticFilesDirectory, 
+                        UploadDirectory, 
+                        path, 
+                        fileName);
         }
 
         public string GetFileUrl(string fileName, string path)

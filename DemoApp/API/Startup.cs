@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO.Abstractions;
 
 namespace API
 {
@@ -38,6 +39,7 @@ namespace API
             services.AddFluentValidation(c => c.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddScoped<IFileService, FileService>();
+            services.AddSingleton<IFileSystem, FileSystem>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

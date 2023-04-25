@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.IO.Abstractions" Version="19.2.18" />
   </ItemGroup>
 
 </Project>
